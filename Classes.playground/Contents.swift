@@ -18,11 +18,25 @@ import Foundation
  */
 // write your code here
 
-
-
-
-
-
+class Person {
+    
+    var firstName: String
+    var lastName: String
+    var fullName: String{
+        return "\(firstName) \(lastName)"
+    }
+    
+    init(firstName: String, lastName: String){
+        
+        self.firstName = firstName
+        self.lastName = lastName
+    }
+    
+    func greet(person: Person)->String{
+        return "Hello, \(person.firstName)!"
+    }
+    
+}
 
 // Test
 let person = Person(firstName: "Alice", lastName: "Johnson")
@@ -56,8 +70,6 @@ assert(person.fullName == "Alice Johnson", person.fullName)
 
 
 
-
-
 // Test
 let friend = Person(firstName: "Phil", lastName: "Davies")
 var greeting = person.greet(friend)
@@ -83,12 +95,30 @@ extension Double {
 
 // write your code here
 
-
-
-
-
-
-
+class Transaction{
+    
+    var type: String
+    var amount: Double
+    var description: String{
+        
+        var phrase = ""
+        
+        if self.type == "out"{
+            
+            phrase =  "Transaction: debit in the amount of $\(self.amount.toMoney)"
+            
+        }else if self.type == "in"{
+            phrase =  "Transaction: credit in the amount of $\(self.amount.toMoney)"
+        }
+        return phrase
+    }
+    
+    init(type: String, amount: Double){
+        
+        self.amount = amount
+        self.type = type
+    }
+}
 
 
 
@@ -110,14 +140,6 @@ assert(transaction2.amount == 1.2, "\(transaction2.amount)")
  */
 
 
-
-
-
-
-
-
-
-
 // Test
 assert(transaction1.description == "Transaction: credit in the amount of $10.00", transaction1.description)
 assert(transaction2.description == "Transaction: debit in the amount of $1.20", transaction2.description)
@@ -134,13 +156,46 @@ assert(transaction2.description == "Transaction: debit in the amount of $1.20", 
  */
 // write your code here
 
-
-
-
-
-
-
-
+class BankAccount{
+    
+    var owner: Person
+    var transactions: [Transaction]
+    var balance:Double {
+        
+        var money = 0.0
+        
+        for trans in transactions{
+            
+            if trans.type == "in"{
+                money += trans.amount
+                
+            }else if trans.type == "out"{
+                
+                money -= trans.amount
+            }
+        }
+        return money
+    }
+    
+    init(owner: Person){
+        
+        self.owner = person
+        self.transactions = []
+    }
+    
+    func deposit(amount: Double){
+        
+        let transaction = Transaction(type: "in", amount: amount)
+        transactions.append(transaction)
+    }
+    
+    func withdraw(amount: Double){
+        
+        let tranaction = Transaction(type: "out", amount: amount)
+        transactions.append(tranaction)
+    }
+    
+}
 
 
 // Test
@@ -157,14 +212,6 @@ assert(personBankAccount.transactions.isEmpty)
 
 
 
-
-
-
-
-
-
-
-
 // Test
 personBankAccount.deposit(100.0)
 assert(personBankAccount.transactions.count == 1, "\(personBankAccount.transactions.count)")
@@ -177,15 +224,6 @@ assert(personBankAccount.transactions.count == 2, "\(personBankAccount.transacti
  
  The owner of the account also needs a way to take money out of their bank account. In the `BankAccount` class you created in Question #6, add a method called `withdraw(_:)`. This method should take a `Double` representing the amount to be withdrawn from the account as a parameter. It should create a new `Transaction` object representing the withdrawal and add it to the `BankAccount`'s `transactions` array. This method does not need to return anything.
  */
-
-
-
-
-
-
-
-
-
 
 // Test
 personBankAccount.withdraw(25.0)
@@ -201,13 +239,6 @@ assert(personBankAccount.transactions.count == 4, "\(personBankAccount.transacti
  
  Remember that "in" transactions count as money coming in, and "out" transactions count as money going out.
  */
-
-
-
-
-
-
-
 
 
 // Test
