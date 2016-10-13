@@ -18,7 +18,22 @@ import Foundation
  */
 // write your code here
 
-
+class Person {
+    let firstName: String
+    let lastName: String
+    var fullName: String {
+        return "\(firstName) \(lastName)"
+    }
+    
+    init(firstName: String, lastName: String){
+        self.firstName = firstName
+        self.lastName = lastName
+    }
+    
+    func greet(_ person: Person) -> String {
+        return "Hello, \(person.firstName)!"
+    }
+}
 
 
 
@@ -37,6 +52,7 @@ assert(person.lastName == "Johnson", person.lastName)
  
  You can add this property to the class definition you wrote in Question #1.
  */
+
 
 
 
@@ -82,10 +98,25 @@ extension Double {
 }
 
 // write your code here
-
-
-
-
+class Transaction {
+    let amount: Double
+    let type: String
+    var description: String {
+        if(self.type == "in"){
+            return "Transaction: credit in the amount of $\(self.amount.toMoney)"
+        }
+        else {
+            return "Transaction: debit in the amount of $\(self.amount.toMoney)"
+        }
+    }
+    
+    init(type: String, amount: Double){
+        self.amount = amount
+        self.type = type
+    }
+    
+   
+}
 
 
 
@@ -114,10 +145,6 @@ assert(transaction2.amount == 1.2, "\(transaction2.amount)")
 
 
 
-
-
-
-
 // Test
 assert(transaction1.description == "Transaction: credit in the amount of $10.00", transaction1.description)
 assert(transaction2.description == "Transaction: debit in the amount of $1.20", transaction2.description)
@@ -134,7 +161,35 @@ assert(transaction2.description == "Transaction: debit in the amount of $1.20", 
  */
 // write your code here
 
-
+class BankAccount {
+    let owner: Person
+    var transactions: [Transaction]
+    var balance: Double {
+        var totalBalance: Double = 0
+        for transaction in transactions {
+            if transaction.type == "in" {
+                totalBalance += transaction.amount
+            }
+            else {
+                totalBalance -= transaction.amount
+            }
+        }
+        return totalBalance
+    }
+    
+    init(owner: Person){
+        self.owner = owner
+        transactions = []
+    }
+    
+    func deposit(_ amountDeposit: Double) {
+        self.transactions.append(Transaction(type: "in", amount: amountDeposit))
+    }
+    
+    func withdraw(_ amountWithdrawn: Double) {
+        self.transactions.append(Transaction(type: "out", amount: amountWithdrawn))
+    }
+}
 
 
 
