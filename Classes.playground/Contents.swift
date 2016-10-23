@@ -17,8 +17,23 @@ import Foundation
  Create a new class called `Person`. This class should include properties for a person's first and last name. Name these properties `firstName` and `lastName`. You should also create an initializer that takes a first and last name as parameters and assigns them to the property.
  */
 // write your code here
-
-
+class Person {
+    var firstName : String
+    var lastName : String
+    var fullName : String {
+        return "\(firstName) \(lastName)"
+    }
+    
+    init (firstName: String, lastName: String) {
+        self.firstName = firstName
+        self.lastName = lastName
+    }
+    
+    func greet(_ person: Person) -> String {
+        return "Hello, \(person.firstName)!"
+    }
+    
+}
 
 
 
@@ -83,7 +98,22 @@ extension Double {
 
 // write your code here
 
-
+class Transaction {
+    
+    var type: String
+    var amount: Double
+    var description: String {
+        let creditOrDebit = type == "in" ? "credit" : "debit"
+        return "Transaction: \(creditOrDebit) in the amount of $\(amount.toMoney)"
+    }
+    
+    init(type:String, amount:Double) {
+        self.type = type
+        self.amount = amount
+    }
+    
+    
+}
 
 
 
@@ -134,7 +164,42 @@ assert(transaction2.description == "Transaction: debit in the amount of $1.20", 
  */
 // write your code here
 
-
+class BankAccount {
+    
+    var owner : Person
+    var transactions : [Transaction]
+    var balance : Double {
+        var balance = 0.0
+        for transaction in transactions {
+            if transaction.type == "In" {
+                balance += transaction.amount
+            } else {
+                balance -= transaction.amount
+            }
+        
+        }
+        return balance
+    }
+    
+    
+    
+    init(owner: Person) {
+        self.owner = owner
+        self.transactions = []
+    }
+    
+    func deposit (_ amount:Double) {
+        let transaction = Transaction(type: "In", amount: amount)
+        transactions.append(transaction)
+    }
+    
+    func withdraw(_ amount:Double) {
+        let transaction = Transaction(type: "Out", amount: amount)
+        transactions.append(transaction)
+    }
+    
+    
+}
 
 
 
