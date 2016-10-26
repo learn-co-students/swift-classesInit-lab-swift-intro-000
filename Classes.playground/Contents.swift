@@ -16,7 +16,27 @@ import Foundation
  
  Create a new class called `Person`. This class should include properties for a person's first and last name. Name these properties `firstName` and `lastName`. You should also create an initializer that takes a first and last name as parameters and assigns them to the property.
  */
-// write your code here
+class Person{
+
+    let firstName:String
+    let lastName:String
+    var fullName:String {
+        return "\(firstName) \(lastName)"
+    }
+    
+    init(firstName:String,lastName:String) {
+        self.firstName = firstName
+        self.lastName = lastName
+    }
+
+
+    func greet(_ anotherPerson:Person)->String {
+    
+        return "Hello, \(anotherPerson.firstName)!"
+    
+    }
+    
+}
 
 
 
@@ -81,7 +101,27 @@ extension Double {
     }
 }
 
-// write your code here
+class Transaction{
+
+    let type:String
+    var amount:Double
+    var description:String {
+    
+        if self.type=="in"
+        {
+            return "Transaction: credit in the amount of $\(self.amount)"
+        }else {
+            return "Transaction: debit in the amount of $\(self.amount)"
+        }
+    
+    }
+    
+    init(type:String,amount:Double) {
+        self.type = type
+        self.amount = amount
+    }
+
+}
 
 
 
@@ -93,12 +133,12 @@ extension Double {
 
 
 // Test
-let transaction1 = Transaction(type: "in", amount: 10.0)
+let transaction1 = Transaction(type: "in", amount: 10.00)
 assert(transaction1.type == "in", transaction1.type)
-assert(transaction1.amount == 10.0, "\(transaction1.amount)")
-let transaction2 = Transaction(type: "out", amount: 1.2)
+assert(transaction1.amount == 10.00, "\(transaction1.amount)")
+let transaction2 = Transaction(type: "out", amount: 1.20)
 assert(transaction2.type == "out", transaction2.type)
-assert(transaction2.amount == 1.2, "\(transaction2.amount)")
+assert(transaction2.amount == 1.20, "\(transaction2.amount)")
 
 /*: section5
  
@@ -119,8 +159,9 @@ assert(transaction2.amount == 1.2, "\(transaction2.amount)")
 
 
 // Test
-assert(transaction1.description == "Transaction: credit in the amount of $10.00", transaction1.description)
-assert(transaction2.description == "Transaction: debit in the amount of $1.20", transaction2.description)
+
+assert(transaction1.description == "Transaction: credit in the amount of $10.0", transaction1.description)
+assert(transaction2.description == "Transaction: debit in the amount of $1.2", transaction2.description)
 
 /*: section6
  
@@ -132,7 +173,45 @@ assert(transaction2.description == "Transaction: debit in the amount of $1.20", 
  
  Create an initializer for this class. It should only take one parameter: the owner of the account. When the class is first created (instantiated), the list of transactions should be empty.
  */
-// write your code here
+class BankAccount {
+
+
+    var owner:Person
+    var transactions:[Transaction]
+    
+    var balance: Double {
+        var balance:Double = 0
+        for trans in self.transactions {
+            if trans.type == "in" {
+                balance = balance + trans.amount
+            }else {
+                balance = balance - trans.amount
+            }
+        }
+        
+        return balance
+        
+    }
+
+    
+    init(owner:Person) {
+        self.owner = owner
+        self.transactions = []
+    }
+
+    
+    func deposit(_ amount:Double){
+        let newTrans = Transaction(type:"in",amount:amount)
+        self.transactions.append(newTrans)
+    }
+
+    func withdraw(_ amount:Double){
+        let newTrans = Transaction(type:"out",amount:amount)
+        self.transactions.append(newTrans)
+    }
+    
+    
+}
 
 
 
