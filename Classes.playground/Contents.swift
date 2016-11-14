@@ -16,19 +16,35 @@ import Foundation
  
  Create a new class called `Person`. This class should include properties for a person's first and last name. Name these properties `firstName` and `lastName`. You should also create an initializer that takes a first and last name as parameters and assigns them to the property.
  */
-// write your code here
-
-
-
-
-
-
+class Person {
+    var firstName: String = ""
+    var lastName: String = ""
+    var fullName: String {
+        get {
+            self.fullName = "\(firstName) \(lastName)"
+            return self.fullName
+        }
+        
+        set {
+            // figure this part out with newValue
+        }
+    }
+    // the instruction is a little dubious for this, and AnyObject as a param seems weird? Perhaps String?
+    func greet(_: AnyObject) -> String {
+        let phrase = ("Hello, \(person.fullName)")
+        return phrase
+    }
+    
+    init(firstName: String, lastName: String) {
+        self.firstName = firstName
+        self.lastName = lastName
+    }
+}
 
 // Test
 let person = Person(firstName: "Alice", lastName: "Johnson")
 assert(person.firstName == "Alice", person.firstName)
 assert(person.lastName == "Johnson", person.lastName)
-
 /*: section2
  
  ## Question 2
@@ -37,12 +53,8 @@ assert(person.lastName == "Johnson", person.lastName)
  
  You can add this property to the class definition you wrote in Question #1.
  */
-
-
-
 // Test
 assert(person.fullName == "Alice Johnson", person.fullName)
-
 /*: section3
  
  ## Question 3
@@ -51,20 +63,12 @@ assert(person.fullName == "Alice Johnson", person.fullName)
  
  You can add this method to the class definition you wrote in Question #1.
  */
-
-
-
-
-
-
-
 // Test
 let friend = Person(firstName: "Phil", lastName: "Davies")
 var greeting = person.greet(friend)
 assert(greeting == "Hello, Phil!", greeting)
 greeting = friend.greet(person)
 assert(greeting == "Hello, Alice!", greeting)
-
 /*: section4
  
  ## Question 4
@@ -81,16 +85,34 @@ extension Double {
     }
 }
 
-// write your code here
-
-
-
-
-
-
-
-
-
+class Transaction {
+    var type: String {
+        // getting get and set confused. On set, if type is in, its credit and if its out, then debit. For get, getting confused as to know which one is which one to set.
+        get {
+            self.type = "in"
+        }
+        
+        set {
+            if type == "in" {
+                self.type = "in"
+            }
+            
+            if type == "out" {
+                self.type = "out"
+            }
+        }
+    }
+    var amount: Double = 0.0
+    var description = "Transaction: \(transaction.type) in the amount of $\(amount)"
+    
+    init(type: String, amount: Double, description: String) {
+        self.type = type
+        self.amount = amount
+        self.description = description
+    }
+    
+    
+}
 
 // Test
 let transaction1 = Transaction(type: "in", amount: 10.0)
@@ -108,20 +130,9 @@ assert(transaction2.amount == 1.2, "\(transaction2.amount)")
  
  Note that formatting `Double`s so they have two decimal places (like money) can be a bit difficult, so a method has been added to the `Double` class for you to help you with that. Assuming `amount` is a double, you can call `double.toMoney` to get a string that formats the `Double` to two decimal places.
  */
-
-
-
-
-
-
-
-
-
-
 // Test
 assert(transaction1.description == "Transaction: credit in the amount of $10.00", transaction1.description)
 assert(transaction2.description == "Transaction: debit in the amount of $1.20", transaction2.description)
-
 /*: section6
  
  ## Question 6
