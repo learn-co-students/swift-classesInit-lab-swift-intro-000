@@ -17,21 +17,14 @@ import Foundation
  Create a new class called `Person`. This class should include properties for a person's first and last name. Name these properties `firstName` and `lastName`. You should also create an initializer that takes a first and last name as parameters and assigns them to the property.
  */
 class Person {
-    var firstName: String = ""
-    var lastName: String = ""
+    var firstName: String
+    var lastName: String
     var fullName: String {
-        get {
-            self.fullName = "\(firstName) \(lastName)"
-            return self.fullName
-        }
-        
-        set {
-            // figure this part out with newValue
-        }
+        return "\(firstName) \(lastName)"
     }
-    // the instruction is a little dubious for this, and AnyObject as a param seems weird? Perhaps String?
+    
     func greet(_: AnyObject) -> String {
-        let phrase = ("Hello, \(person.fullName)")
+        let phrase = ("Hello, \(self.firstName)!")
         return phrase
     }
     
@@ -41,8 +34,8 @@ class Person {
     }
 }
 
-// Test
 let person = Person(firstName: "Alice", lastName: "Johnson")
+print(person.fullName)
 assert(person.firstName == "Alice", person.firstName)
 assert(person.lastName == "Johnson", person.lastName)
 /*: section2
@@ -53,7 +46,6 @@ assert(person.lastName == "Johnson", person.lastName)
  
  You can add this property to the class definition you wrote in Question #1.
  */
-// Test
 assert(person.fullName == "Alice Johnson", person.fullName)
 /*: section3
  
@@ -63,7 +55,6 @@ assert(person.fullName == "Alice Johnson", person.fullName)
  
  You can add this method to the class definition you wrote in Question #1.
  */
-// Test
 let friend = Person(firstName: "Phil", lastName: "Davies")
 var greeting = person.greet(friend)
 assert(greeting == "Hello, Phil!", greeting)
@@ -86,42 +77,26 @@ extension Double {
 }
 
 class Transaction {
-    var type: String {
-        // getting get and set confused. On set, if type is in, its credit and if its out, then debit. For get, getting confused as to know which one is which one to set.
-        get {
-            self.type = "in"
-        }
-        
-        set {
-            if type == "in" {
-                self.type = "in"
-            }
-            
-            if type == "out" {
-                self.type = "out"
-            }
-        }
-    }
+    var type: String
     var amount: Double = 0.0
-    var description = "Transaction: \(transaction.type) in the amount of $\(amount)"
+    var description: String {
+        return "Transaction: \(type) in the amount of $\(amount)"
+    }
     
-    init(type: String, amount: Double, description: String) {
+    init(type: String, amount: Double) {
         self.type = type
         self.amount = amount
-        self.description = description
     }
-    
-    
 }
 
-// Test
+// overthinking what type is. need to add it in.
+
 let transaction1 = Transaction(type: "in", amount: 10.0)
 assert(transaction1.type == "in", transaction1.type)
 assert(transaction1.amount == 10.0, "\(transaction1.amount)")
 let transaction2 = Transaction(type: "out", amount: 1.2)
 assert(transaction2.type == "out", transaction2.type)
 assert(transaction2.amount == 1.2, "\(transaction2.amount)")
-
 /*: section5
  
  ## Question 5
@@ -143,16 +118,9 @@ assert(transaction2.description == "Transaction: debit in the amount of $1.20", 
  
  Create an initializer for this class. It should only take one parameter: the owner of the account. When the class is first created (instantiated), the list of transactions should be empty.
  */
-// write your code here
-
-
-
-
-
-
-
-
-
+class BankAccount {
+    var owner: Person =
+}
 
 // Test
 let personBankAccount = BankAccount(owner: person)
