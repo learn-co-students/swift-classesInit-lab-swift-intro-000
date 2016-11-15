@@ -89,8 +89,6 @@ class Transaction {
     }
 }
 
-// overthinking what type is. need to add it in.
-
 let transaction1 = Transaction(type: "in", amount: 10.0)
 assert(transaction1.type == "in", transaction1.type)
 assert(transaction1.amount == 10.0, "\(transaction1.amount)")
