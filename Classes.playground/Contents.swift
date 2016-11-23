@@ -19,8 +19,79 @@ import Foundation
 // write your code here
 
 
+class Person {
+    var firstName: String
+    var lastName: String
+    var fullName: String {
+        return "\(firstName) \(lastName)"
+    }
+    
+    
+    init(firstName: String, lastName: String)
+    {
+        self.firstName = firstName
+        self.lastName = lastName
+    }
+    
+    func greet(_ personMeeting: Person) -> String{
+        return "Hello, \(personMeeting.firstName)"
+    }
+}
 
+class Transaction {
+    var type: String
+    var amount: Double
+    var description: String {
+        return "Transaction: \(type) of the amount £\(amount)"
+    }
+    
+    init(type: String, amount: Double)
+    {
+        self.type = type
+        self.amount = amount
+    }
+}
 
+class BankAccount {
+    var owner: Person
+    var transactions: [Transaction] = []
+    var balance: Double {
+        var currentBalance: Double = 0.0
+        
+        for transaction in transactions
+        {
+            switch transaction.type {
+            case "IN":
+                currentBalance += transaction.amount
+            case "OUT":
+                currentBalance -= transaction.amount
+            default:
+                currentBalance = 0
+            }
+        }
+        
+        return currentBalance
+    }
+    
+    init(owner: Person)
+    {
+        self.owner = owner
+        //self.transactions = nil
+    }
+    
+    func deposit(_ amount: Double) {
+        let thisTransaction = Transaction(type: "IN", amount: amount)
+        
+        self.transactions.append(thisTransaction)
+    }
+    
+    func withdraw(_ amount: Double) {
+        let thisTransaction = Transaction(type: "OUT", amount: amount)
+    
+        
+        self.transactions.append(thisTransaction)
+    }
+}
 
 
 
@@ -212,6 +283,12 @@ assert(personBankAccount.transactions.count == 4, "\(personBankAccount.transacti
 
 // Test
 assert(personBankAccount.balance == 74.5, personBankAccount.balance.toMoney)
+
+var personA = Person(firstName: "Jane", lastName: "Doe")
+var personB = Person(firstName: "Homer", lastName: "Simpson")
+
+personA.greet(personB)
+
 
 /*: finale
  
