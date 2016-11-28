@@ -17,7 +17,22 @@ import Foundation
  Create a new class called `Person`. This class should include properties for a person's first and last name. Name these properties `firstName` and `lastName`. You should also create an initializer that takes a first and last name as parameters and assigns them to the property.
  */
 // write your code here
-
+class Person {
+    var firstName : String
+    var lastName : String
+    var fullName : String {
+        return firstName+" "+lastName
+    }
+    init(firstName:String ,lastName:String) {
+        self.firstName = firstName
+        self.lastName = lastName
+    }
+    
+    func greet(_ newPer:Person) -> String {
+        return "Hello, \(newPer.firstName)!"
+    }
+    
+}
 
 
 
@@ -57,7 +72,6 @@ assert(person.fullName == "Alice Johnson", person.fullName)
 
 
 
-
 // Test
 let friend = Person(firstName: "Phil", lastName: "Davies")
 var greeting = person.greet(friend)
@@ -81,6 +95,23 @@ extension Double {
     }
 }
 
+class Transaction {
+    var type : String
+    var amount : Double
+    var description : String {
+        if type == "in" {
+            return "Transaction: credit in the amount of $\(self.amount.toMoney)."
+        }
+        else {
+            return "Transaction: debit in the amount of $\(self.amount.toMoney)."
+        }
+    }
+    
+    init(type :String , amount:Double) {
+        self.type = type
+        self.amount = amount
+    }
+}
 // write your code here
 
 
@@ -116,9 +147,8 @@ assert(transaction2.amount == 1.2, "\(transaction2.amount)")
 
 
 
-
-
 // Test
+print("\(transaction1.description)")
 assert(transaction1.description == "Transaction: credit in the amount of $10.00", transaction1.description)
 assert(transaction2.description == "Transaction: debit in the amount of $1.20", transaction2.description)
 
@@ -136,7 +166,38 @@ assert(transaction2.description == "Transaction: debit in the amount of $1.20", 
 
 
 
-
+class BankAccount {
+    var owner : Person
+    var transactions : [Transaction]
+    var balance : Double {
+        var result:Double  = 0.0
+        if !transactions.isEmpty {
+            for trans in transactions {
+                if trans.type == "in" {
+                    result = result + trans.amount
+                } else {
+                    result = result-trans.amount
+                }
+            }
+        }
+        return result
+    }
+    
+    init(owner : Person) {
+        self.owner = owner
+        self.transactions = []
+    }
+    
+    func deposit(_ money:Double) {
+        let new_trans :Transaction = Transaction(type: "in", amount: money)
+        self.transactions.append(new_trans)
+    }
+    func withdraw(_ money:Double) {
+        let new_trans :Transaction = Transaction(type: "out", amount: money)
+        self.transactions.append(new_trans)
+    }
+    
+}
 
 
 
