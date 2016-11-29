@@ -17,9 +17,28 @@ import Foundation
  Create a new class called `Person`. This class should include properties for a person's first and last name. Name these properties `firstName` and `lastName`. You should also create an initializer that takes a first and last name as parameters and assigns them to the property.
  */
 // write your code here
+class Person{
+    
+    var firstName: String
+    var lastName: String
+    
+    var fullName: String{
+        get{
+            return firstName + " " + lastName
+        }
+    }
+    
+    init(firstName: String, lastName: String){
+        self.firstName = firstName
+        self.lastName = lastName
+        
+    }
+    
+    func greet(_ IamPerson:Person) -> String {
+        return "Hello, \(IamPerson.firstName)!"
+    }
 
-
-
+}
 
 
 
@@ -83,6 +102,25 @@ extension Double {
 
 // write your code here
 
+class Transaction{
+    var amount: Double
+    var type: String
+    var description: String{
+        get{
+            if(type == "out"){
+                return "Transaction: debit in the amount of $\(amount.toMoney)"
+            } else {
+                return "Transaction: credit in the amount of $\(amount.toMoney)"
+            }
+            
+        }
+    }
+    init(type: String, amount: Double){
+        self.type = type
+        self.amount = amount
+    }
+}
+
 
 
 
@@ -134,8 +172,34 @@ assert(transaction2.description == "Transaction: debit in the amount of $1.20", 
  */
 // write your code here
 
-
-
+class BankAccount{
+    var owner: Person
+    var amtWithdrawn: Double = 0.0
+    var amtDeposited: Double = 0.0
+    
+    var transactions:[Double] = []
+    
+    init(owner:Person){
+        self.owner = owner
+    }
+    
+    func deposit(_ saveMoney:Double){
+        let makeDeposit = Transaction(type: "in", amount: saveMoney)
+        transactions.append(makeDeposit.amount)
+        amtDeposited += saveMoney
+    }
+    
+    func withdraw(_ spendMoney:Double){
+        
+        let makeWithdrawl = Transaction(type: "out", amount: spendMoney)
+        transactions.append(makeWithdrawl.amount)
+        amtWithdrawn += spendMoney
+    }
+    
+    var balance: Double {
+    return (amtDeposited - amtWithdrawn)
+    }
+}
 
 
 
@@ -217,3 +281,4 @@ assert(personBankAccount.balance == 74.5, personBankAccount.balance.toMoney)
  
  Excellent! If you completed this lab, you should see no more errors in this playground file. Hopefully this has given you a look at how objects can interact with each other, and how you can implement methods to interact with the classes you create.
  */
+ 
