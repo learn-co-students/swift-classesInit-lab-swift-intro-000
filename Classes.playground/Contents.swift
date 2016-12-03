@@ -18,6 +18,22 @@ import Foundation
  */
 // write your code here
 
+class Person {
+    var firstName: String;
+    var lastName: String;
+    var fullName: String {
+        return "\(firstName) \(lastName)"
+    }
+    
+    init (firstName: String, lastName: String){
+        self.firstName = firstName
+        self.lastName = lastName
+    }
+    
+    func greet(_ person:Person) -> String{
+        return "Hello, \(person.firstName)!"
+    }
+}
 
 
 
@@ -83,7 +99,30 @@ extension Double {
 
 // write your code here
 
-
+class Transaction {
+    var type: String
+    var amount: Double
+    var description: String {
+        var typeValue = type
+        
+        if typeValue == "in"{
+         
+            typeValue = "credit"
+            
+        }else {
+            
+            typeValue = "debit"
+        }
+        
+        return "Transaction: \(typeValue) in the amount of $\(amount.toMoney)"
+    }
+    
+    init(type: String, amount: Double) {
+        self.type = type
+        self.amount = amount
+    }
+    
+}
 
 
 
@@ -134,7 +173,40 @@ assert(transaction2.description == "Transaction: debit in the amount of $1.20", 
  */
 // write your code here
 
-
+class BankAccount {
+    
+    var owner: Person
+    var transactions: [Transaction] = []
+    var balance: Double {
+        var finalBalance = 0.0
+        
+        for amount in transactions {
+            if amount.type == "in" {
+                finalBalance += amount.amount
+            }else {
+                finalBalance -= amount.amount
+            }
+        }
+        
+        return finalBalance
+    }
+    
+    init (owner: Person){
+        self.owner = owner
+    }
+    
+    func deposit(_ amount: Double) {
+       
+        let transaction = Transaction(type: "in", amount: amount);
+        transactions.append(transaction)
+    }
+    
+    func withdraw(_ amount: Double) {
+        let transaction = Transaction(type: "out", amount: amount)
+        transactions.append(transaction)
+    }
+    
+}
 
 
 
