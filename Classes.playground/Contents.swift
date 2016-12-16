@@ -16,15 +16,27 @@ import Foundation
  
  Create a new class called `Person`. This class should include properties for a person's first and last name. Name these properties `firstName` and `lastName`. You should also create an initializer that takes a first and last name as parameters and assigns them to the property.
  */
-// write your code here
+class Person {
+    var firstName: String
+    var lastName: String
+    var fullName: String {
+        return("\(firstName) \(lastName)")
+    }
+    
+    init(firstName: String, lastName: String) {
+        self.firstName = firstName
+        self.lastName = lastName
+    }
+    
+    
+    func greet (_:Person) -> String {
+        return("Hello, \(person.firstName)!")
+    }
+    
+    
+}
 
 
-
-
-
-
-
-// Test
 let person = Person(firstName: "Alice", lastName: "Johnson")
 assert(person.firstName == "Alice", person.firstName)
 assert(person.lastName == "Johnson", person.lastName)
@@ -38,9 +50,6 @@ assert(person.lastName == "Johnson", person.lastName)
  You can add this property to the class definition you wrote in Question #1.
  */
 
-
-
-// Test
 assert(person.fullName == "Alice Johnson", person.fullName)
 
 /*: section3
@@ -52,13 +61,6 @@ assert(person.fullName == "Alice Johnson", person.fullName)
  You can add this method to the class definition you wrote in Question #1.
  */
 
-
-
-
-
-
-
-// Test
 let friend = Person(firstName: "Phil", lastName: "Davies")
 var greeting = person.greet(friend)
 assert(greeting == "Hello, Phil!", greeting)
@@ -81,24 +83,41 @@ extension Double {
     }
 }
 
-// write your code here
+class Transaction {
+    var type: String
+    var amount: Double
+    var description: String {
+        var typeValue = type
+        
+        if typeValue == "in" {
+            typeValue = "credit"
+        } else if typeValue == "out"{
+            typeValue = "debit"
+        } else {
+            typeValue = "nul"
+        }
+        
+        return "Transaction: \(typeValue) in the amount of $\(amount)"
+    }
+    
+    init(type: String, amount: Double) {
+        self.type = type
+        self.amount = amount
+    }
+    
+}
 
 
 
-
-
-
-
-
-
-
-// Test
 let transaction1 = Transaction(type: "in", amount: 10.0)
 assert(transaction1.type == "in", transaction1.type)
 assert(transaction1.amount == 10.0, "\(transaction1.amount)")
 let transaction2 = Transaction(type: "out", amount: 1.2)
 assert(transaction2.type == "out", transaction2.type)
 assert(transaction2.amount == 1.2, "\(transaction2.amount)")
+
+
+
 
 /*: section5
  
@@ -110,15 +129,6 @@ assert(transaction2.amount == 1.2, "\(transaction2.amount)")
  */
 
 
-
-
-
-
-
-
-
-
-// Test
 assert(transaction1.description == "Transaction: credit in the amount of $10.00", transaction1.description)
 assert(transaction2.description == "Transaction: debit in the amount of $1.20", transaction2.description)
 
@@ -132,18 +142,51 @@ assert(transaction2.description == "Transaction: debit in the amount of $1.20", 
  
  Create an initializer for this class. It should only take one parameter: the owner of the account. When the class is first created (instantiated), the list of transactions should be empty.
  */
-// write your code here
+class BankAccount {
+    var owner: Person
+    var transactions: [Transaction]
+    
+    
+    var Balance: Double {
+        var sum = 0.0
+        for transaction in transactions {
+            
+            if transaction.type == "in" {
+                sum += transaction.amount
+            }
+            
+            else if transaction.type == "out" {
+                sum -= transaction.amount
+            }
+            
+            
+            return sum
+        }
+        
+    }
+    
+    
+    
+    
+    init(owner: Person){
+        self.owner = owner
+    }
+    
+    func deposit(_ depAmount:Double) {
+        let newTransaction = Transaction.init(type: "in", amount: depAmount)
+        self.transactions.append(newTransaction)
+        
+    }
+    
+    func withdraw(_ withAmount: Double) {
+        let newTransaction1 = Transaction.init(type: "out", amount: withAmount)
+        self.transactions.append(newTransaction1)
+    }
+    
+    
+}
 
 
-
-
-
-
-
-
-
-
-// Test
 let personBankAccount = BankAccount(owner: person)
 assert(personBankAccount.owner.fullName == "Alice Johnson", personBankAccount.owner.fullName)
 assert(personBankAccount.transactions.isEmpty)
@@ -156,16 +199,6 @@ assert(personBankAccount.transactions.isEmpty)
  */
 
 
-
-
-
-
-
-
-
-
-
-// Test
 personBankAccount.deposit(100.0)
 assert(personBankAccount.transactions.count == 1, "\(personBankAccount.transactions.count)")
 personBankAccount.deposit(10.0)
@@ -187,7 +220,6 @@ assert(personBankAccount.transactions.count == 2, "\(personBankAccount.transacti
 
 
 
-// Test
 personBankAccount.withdraw(25.0)
 assert(personBankAccount.transactions.count == 3, "\(personBankAccount.transactions.count)")
 personBankAccount.withdraw(10.5)
@@ -210,7 +242,7 @@ assert(personBankAccount.transactions.count == 4, "\(personBankAccount.transacti
 
 
 
-// Test
+
 assert(personBankAccount.balance == 74.5, personBankAccount.balance.toMoney)
 
 /*: finale
