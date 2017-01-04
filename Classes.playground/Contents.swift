@@ -17,7 +17,25 @@ import Foundation
  Create a new class called `Person`. This class should include properties for a person's first and last name. Name these properties `firstName` and `lastName`. You should also create an initializer that takes a first and last name as parameters and assigns them to the property.
  */
 // write your code here
-
+class Person {
+    var firstName : String
+    var lastName : String
+    
+    var fullName : String {
+        get {
+            return "\(firstName) \(lastName)"
+        }
+    }
+    
+    init(firstName : String, lastName : String) {
+        self.firstName = firstName;
+        self.lastName = lastName;
+    }
+    
+    func greet(_ person : Person) -> String {
+        return "Hello, \(person.firstName)!"
+    }
+};
 
 
 
@@ -75,6 +93,24 @@ assert(greeting == "Hello, Alice!", greeting)
  
  (Note that the code below also includes an extension for adding a method to `Double`. You'll learn more about extensions later, so for now, don't worry about it. You'll see how to use it in Question #6 below.)
  */
+
+class Transaction {
+    var type : String
+    var amount : Double
+    
+    var description : String {
+        get {
+            return "Transaction: \(self.type == "in" ? "credit" : "debit") in the amount of $\(self.amount.toMoney)"
+        }
+    }
+    
+    init(type : String, amount : Double) {
+        self.type = type;
+        self.amount = amount;
+    }
+    
+}
+
 extension Double {
     var toMoney: String {
         return NSString(format: "%.2f", self) as String
@@ -134,7 +170,39 @@ assert(transaction2.description == "Transaction: debit in the amount of $1.20", 
  */
 // write your code here
 
-
+class BankAccount {
+    var owner : Person
+    var transactions : [Transaction]
+    
+    init(owner : Person) {
+        self.owner = owner
+        self.transactions = [Transaction]()
+    }
+    
+    func deposit(_ amount : Double) {
+        self.transactions.append(Transaction(type : "in", amount : amount))
+    }
+    
+    func withdraw(_ amount : Double) {
+        self.transactions.append(Transaction(type : "out", amount : amount))
+    }
+    
+    var balance : Double {
+        get {
+            var ret : Double = 0
+            for transaction in self.transactions {
+                if (transaction.type == "in") {
+                    ret += transaction.amount;
+                }
+                else {
+                    ret -= transaction.amount;
+                }
+            }
+            
+            return ret;
+        }
+    }
+};
 
 
 
