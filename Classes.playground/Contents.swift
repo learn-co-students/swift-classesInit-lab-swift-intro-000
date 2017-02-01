@@ -19,7 +19,25 @@ import Foundation
 // write your code here
 
 
+class Person {
+    let firstName: String
+    let lastName: String
+    var fullName: String {
+        get {
+            return "\(firstName) \(lastName)"
+        }
+    }
+    
+    init(firstName: String, lastName: String) {
+        self.firstName = firstName
+        self.lastName = lastName
+    }
+    
+    func greet(_ name :Person) -> String {
+        return "Hello, \(name.firstName)!"
+    }
 
+}
 
 
 
@@ -57,7 +75,6 @@ assert(person.fullName == "Alice Johnson", person.fullName)
 
 
 
-
 // Test
 let friend = Person(firstName: "Phil", lastName: "Davies")
 var greeting = person.greet(friend)
@@ -82,7 +99,21 @@ extension Double {
 }
 
 // write your code here
-
+class Transaction {
+    var type: String = ""
+    var amount: Double = 0
+    var description: String {
+        get {
+            let typeString = type == "in" ? "credit" : "debit"
+            return "Transaction: \(typeString) in the amount of $\(amount.toMoney)"
+        }
+    }
+    
+    init(type: String, amount: Double) {
+        self.type = type
+        self.amount = amount
+    }
+}
 
 
 
@@ -93,21 +124,13 @@ extension Double {
 
 
 // Test
+
 let transaction1 = Transaction(type: "in", amount: 10.0)
 assert(transaction1.type == "in", transaction1.type)
 assert(transaction1.amount == 10.0, "\(transaction1.amount)")
 let transaction2 = Transaction(type: "out", amount: 1.2)
 assert(transaction2.type == "out", transaction2.type)
 assert(transaction2.amount == 1.2, "\(transaction2.amount)")
-
-/*: section5
- 
- ## Question 5
- 
- Add a computed property called `description` to the `Transaction` class you created in Question #4. This property should return the string "Transaction: <credit or debit> in the amount of $<amount>.
- 
- Note that formatting `Double`s so they have two decimal places (like money) can be a bit difficult, so a method has been added to the `Double` class for you to help you with that. Assuming `amount` is a double, you can call `double.toMoney` to get a string that formats the `Double` to two decimal places.
- */
 
 
 
@@ -136,7 +159,35 @@ assert(transaction2.description == "Transaction: debit in the amount of $1.20", 
 
 
 
-
+class BankAccount {
+    var owner: Person
+    var transactions: [Transaction] = []
+    var balance: Double {
+        get {
+            var amount = 0.0
+            for money in transactions {
+                if money.type == "in" {
+                    amount += money.amount
+                } else if money.type == "out" {
+                    amount -= money.amount
+                }
+             }
+            return amount
+        }
+    }
+    
+    init(owner: Person) {
+        self.owner = owner
+    }
+    
+    func deposit(_ amount :Double) {
+        transactions.append(Transaction(type: "in",amount: amount))
+    }
+    
+    func withdraw(_ amount:Double) {
+        transactions.append(Transaction(type: "out", amount: amount))
+    }
+}
 
 
 
@@ -204,7 +255,7 @@ assert(personBankAccount.transactions.count == 4, "\(personBankAccount.transacti
 
 
 
-
+//asdfsdfjksdafjdsakfjdksalfja
 
 
 
