@@ -18,7 +18,32 @@ import Foundation
  */
 // write your code here
 
-
+class Person {
+    
+    var firstName: String
+    var lastName: String
+    
+    var fullName: String {
+        
+        get {
+            
+            return "\(firstName) \(lastName)"
+        }
+    }
+    
+    init(firstName:String, lastName:String) {
+        
+        self.firstName = firstName
+        self.lastName = lastName
+    }
+    
+    func greet(_ someone:Person) -> String {
+        
+        return "Hello, \(someone.firstName)!"
+    }
+    
+    
+}
 
 
 
@@ -84,7 +109,36 @@ extension Double {
 // write your code here
 
 
-
+class Transaction {
+    
+    var type: String
+    var amount: Double
+    
+    var description: String {
+        
+        get {
+            
+            if type == "in" {
+                
+                return "Transaction: credit in the amount of $\(amount.toMoney)"
+                
+            } else {
+                
+                return "Transaction: debit in the amount of $\(amount.toMoney)"
+            }
+            
+            
+        }
+    }
+    
+    init(type: String, amount: Double){
+        
+        self.type = type
+        self.amount = amount
+        
+    }
+    
+}
 
 
 
@@ -134,7 +188,54 @@ assert(transaction2.description == "Transaction: debit in the amount of $1.20", 
  */
 // write your code here
 
-
+class BankAccount {
+    
+    var owner: Person
+    var transactions: [Transaction] = [Transaction]()
+    
+    var balance: Double {
+        
+        get {
+            
+            var total: Double = 0.0
+            
+            for transaction in transactions {
+                
+                if transaction.type == "in" {
+                    
+                    total += transaction.amount
+                    
+                } else {
+                    
+                    total -= transaction.amount
+                }
+            }
+            
+            return total
+        }
+    }
+    
+    init(owner: Person) {
+        
+        self.owner = owner
+    }
+    
+    func deposit(_ depositAmount: Double) {
+        
+        let newTransaction = Transaction(type: "in", amount: depositAmount)
+        
+        transactions.append(newTransaction)
+        
+    }
+    
+    func withdraw(_ withdrawalAmount: Double) {
+        
+        let withdrawal = Transaction(type: "out", amount: withdrawalAmount)
+        
+        transactions.append(withdrawal)
+        
+    }
+}
 
 
 
