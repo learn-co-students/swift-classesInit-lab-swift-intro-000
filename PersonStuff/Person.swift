@@ -9,9 +9,27 @@
 import Foundation
 
 class Person {
+    let firstName: String
+    let lastName: String
+    var happiness = 0
+    var fullName: String {
+        return "\(firstName) \(lastName)"
+    }
     
-
+    init(firstName: String, lastName: String) {
+        self.firstName = firstName
+        self.lastName = lastName
+    }
     
+    func greet(person: Person) -> String {
+        happiness = happiness + 2
+        person.happiness = person.happiness + 2
+        return "Hello \(person.fullName)."
+    }
     
-    
+    func dance(with person: Person) -> String {
+        happiness = happiness + 5
+        person.happiness = person.happiness + 5
+        return "💃🏼\(self.fullName)❤️ ❤️\(person.fullName)💃🏼"
+    }
 }
