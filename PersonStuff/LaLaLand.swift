@@ -9,10 +9,18 @@
 import Foundation
 
 class LaLaLand {
-    
-
-    
-    
+  var  sebastian : Person {
+    return Person.init(firstName: "Sebastian", lastName: "Wilder")
+  }
+  var mia : Person {
+    return Person.init(firstName: "Mia", lastName: "Dolan")
+  }
+  func initialMeeting() -> String {
+       return mia.greet(person: sebastian)
+  }
+  func dateNight() -> String {
+    return mia.dance(with: sebastian)
+  }
     
     
 }
