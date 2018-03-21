@@ -26,12 +26,14 @@ class Person {
     
     
     func greet(person: Person) -> String {
-        person.happiness += 2
+        person.happiness = 2
+        self.happiness = 2
         return "Hello \(person.fullName)."
     }
     
     func dance(with person: Person) -> String {
-        person.happiness += 5
+        person.happiness = 5
+        self.happiness = 5
         return "💃🏼\(self.fullName)❤️ ❤️\(person.fullName)💃🏼"
     }
 }
