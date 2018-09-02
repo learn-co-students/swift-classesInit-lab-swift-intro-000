@@ -9,10 +9,19 @@
 import Foundation
 
 class LaLaLand {
+    let sebastian = Person(firstName: "Sebastian", lastName: "Wilder")
+    let mia = Person(firstName: "Mia", lastName: "Dolan")
     
-
+    func initialMeeting() -> String {
+        return mia.greet(person: sebastian)
+    }
     
-    
-    
+    func dateNight() -> String {
+        return mia.dance(with: sebastian)
+    }
     
 }
+
+
+//"💃Mia Dolan♥️ ♥️Sebastian Wilder💃"
+//"💃🏼Mia Dolan❤️ ❤️Sebastian Wilder💃🏼"
