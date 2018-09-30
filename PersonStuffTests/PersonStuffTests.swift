@@ -7,6 +7,8 @@
 //
 
 import XCTest
+import Foundation
+
 @testable import PersonStuff
 
 class PersonStuffTests: XCTestCase {
