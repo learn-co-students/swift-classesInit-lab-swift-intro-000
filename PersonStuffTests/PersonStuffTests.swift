@@ -50,8 +50,8 @@ extension PersonStuffTests {
     func testDance() {
         becky.happiness = 0
         let jessica = Person(firstName: "Jessica", lastName: "Rose")
-        let result = becky.dance(with: jessica)
-        XCTAssertEqual(result, "💃🏼Becky Bernstein❤️ ❤️Jessica Rose💃🏼")
+        let result = becky.dance(person: jessica)
+        XCTAssertEqual(result, "💃🏼Becky Bernstein♡ ♡Jessica Rose💃🏼")
         XCTAssertEqual(jessica.happiness, 5, "Jessicas happiness should now be 5 after shes been hugged by Becky.")
         XCTAssertEqual(becky.happiness, 5, "Beckys happiness should now be 5 after she has hugged Jessica.")
     }
@@ -75,7 +75,7 @@ extension PersonStuffTests {
     
     func testDateNight() {
         let result = losAngeles.dateNight()
-        XCTAssertEqual(result, "💃🏼Mia Dolan❤️ ❤️Sebastian Wilder💃🏼")
+        XCTAssertEqual(result, "💃🏼Mia Dolan♡ ♡Sebastian Wilder💃🏼")
     }
     
 }
